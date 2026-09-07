@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Color system — cool signal-blue base with a warm amber counterpoint,
+     deliberately not the near-black + single neon-accent default. */
+  --color-bg: #0b0e14;
+  --color-bg-soft: #0e121a;
+  --color-elevated: #111623;
+  --color-surface: #141a26;
+  --color-surface-hover: #182035;
+
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.16);
+
+  --color-text: #edeff5;
+  --color-text-muted: #9aa3b8;
+  --color-text-faint: #626c82;
+
+  --color-primary: #6d8cff;
+  --color-primary-dim: #4c63c9;
+  --color-primary-soft: rgba(109, 140, 255, 0.12);
+
+  --color-accent: #f2b84b;
+  --color-accent-soft: rgba(242, 184, 75, 0.14);
+
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --container-content: 72rem;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-primary);
+  color: #050609;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.section-shell {
+  max-width: var(--container-content);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .section-shell {
+    padding-inline: 2.5rem;
+  }
+}
+
+.glass-panel {
+  background: rgba(20, 26, 38, 0.55);
+  border: 1px solid var(--color-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  height: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border-radius: 999px;
+}
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-strong) transparent;
+}
+
+.gradient-ink {
+  background: linear-gradient(100deg, #edeff5 30%, #a9b6ff 65%, #f2b84b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
