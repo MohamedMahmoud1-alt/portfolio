@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { Mail, Phone, MapPin, Copy, Check, Send } from "lucide-react";
-import { GithubMark, LinkedinMark } from "@/components/ui/BrandIcons";
+import { GithubMark, LinkedinMark, KaggleMark } from "@/components/ui/BrandIcons";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { Magnetic } from "@/components/ui/MagneticButton";
@@ -30,6 +30,7 @@ export function Contact() {
 
   const github = socials.find((s) => s.icon === "github");
   const linkedin = socials.find((s) => s.icon === "linkedin");
+  const kaggle = socials.find((s) => s.icon === "kaggle");
 
   return (
     <section id="contact" className="border-t border-[var(--color-border)] py-24 sm:py-32">
@@ -42,7 +43,7 @@ export function Contact() {
           />
 
           <div className="mt-8 space-y-3">
-            <div className="flex items-center justify-between rounded-xl border border-[var(--color-border)] bg-white/[0.02] p-4">
+            <div className="flex items-center justify-between rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] p-4">
               <div className="flex items-center gap-3">
                 <Mail size={17} className="text-[var(--color-primary)]" />
                 <span className="text-sm text-[var(--color-text)]">{contact.email}</span>
@@ -55,11 +56,11 @@ export function Contact() {
                 {copied ? <Check size={15} /> : <Copy size={15} />}
               </button>
             </div>
-            <div className="flex items-center gap-3 rounded-xl border border-[var(--color-border)] bg-white/[0.02] p-4">
+            <div className="flex items-center gap-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] p-4">
               <Phone size={17} className="text-[var(--color-primary)]" />
               <span className="text-sm text-[var(--color-text)]">{contact.phone}</span>
             </div>
-            <div className="flex items-center gap-3 rounded-xl border border-[var(--color-border)] bg-white/[0.02] p-4">
+            <div className="flex items-center gap-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] p-4">
               <MapPin size={17} className="text-[var(--color-primary)]" />
               <span className="text-sm text-[var(--color-text)]">{contact.location}</span>
             </div>
@@ -88,11 +89,22 @@ export function Contact() {
                 <LinkedinMark size={18} />
               </a>
             )}
+            {kaggle && (
+              <a
+                href={kaggle.url}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Kaggle"
+                className="rounded-full border border-[var(--color-border)] p-3 text-[var(--color-text-muted)] transition-colors hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
+              >
+                <KaggleMark size={18} />
+              </a>
+            )}
           </div>
         </Reveal>
 
         <Reveal delay={0.1}>
-          <form onSubmit={handleSubmit} className="rounded-2xl border border-[var(--color-border)] bg-white/[0.02] p-6 sm:p-7">
+          <form onSubmit={handleSubmit} className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] p-6 sm:p-7">
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <Field label="Your name">
                 <input
@@ -129,7 +141,8 @@ export function Contact() {
             </div>
             <Magnetic
               as="button"
-              className="mt-5 inline-flex items-center gap-2 rounded-full bg-[var(--color-primary)] px-6 py-3 text-sm font-semibold text-[#050609]"
+              className="mt-5 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white"
+              style={{ background: "var(--gradient-brand)" }}
             >
               <Send size={15} />
               Send message

@@ -20,6 +20,8 @@ export const technicalSkills: SkillCategory[] = [
       "RAG",
       "Agentic AI",
       "Prompt Engineering",
+      "Expert Systems",
+      "Fuzzy Logic",
     ],
   },
   {
@@ -30,7 +32,13 @@ export const technicalSkills: SkillCategory[] = [
       "Scikit-learn",
       "Hugging Face Transformers",
       "LangChain",
+      "YOLO11",
+      "OpenCV",
     ],
+  },
+  {
+    title: "Web & Deployment",
+    items: ["Next.js", "TypeScript", "SQL Server", "Streamlit", "Vercel"],
   },
   {
     title: "Data & Tools",
@@ -38,7 +46,7 @@ export const technicalSkills: SkillCategory[] = [
   },
   {
     title: "APIs & Development",
-    items: ["REST APIs", "Pre-trained Models"],
+    items: ["REST APIs", "Google Gemini API", "Pre-trained Models"],
   },
 ];
 
@@ -56,8 +64,8 @@ export const languages = [
 ];
 
 export const quickStats = [
-  { value: "8", label: "Applied ML / DL / NLP projects built" },
-  { value: "5", label: "Structured applied training programs" },
+  { value: "12", label: "Applied ML / DL / NLP projects built" },
+  { value: "2nd", label: "Place — IEEE SCU AI Competition" },
   { value: "15", label: "Completed certifications" },
   { value: "3.15", label: "GPA / 4.0 — B.Eng. AI Engineering" },
 ];

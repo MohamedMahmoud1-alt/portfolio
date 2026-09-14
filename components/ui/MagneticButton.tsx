@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type ReactNode } from "react";
+import { useRef, useState, type ReactNode, type CSSProperties } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -14,6 +14,7 @@ type MagneticProps = {
   download?: boolean | string;
   onClick?: () => void;
   strength?: number;
+  style?: CSSProperties;
 };
 
 const MotionAnchor = motion.a;
@@ -33,6 +34,7 @@ export function Magnetic({
   download,
   onClick,
   strength = 14,
+  style,
 }: MagneticProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState({ x: 0, y: 0 });
@@ -67,12 +69,13 @@ export function Magnetic({
           download={download}
           onClick={onClick}
           className={cn(className)}
+          style={style}
           whileTap={{ scale: 0.96 }}
         >
           {children}
         </MotionAnchor>
       ) : (
-        <MotionButton onClick={onClick} className={cn(className)} whileTap={{ scale: 0.96 }}>
+        <MotionButton onClick={onClick} className={cn(className)} style={style} whileTap={{ scale: 0.96 }}>
           {children}
         </MotionButton>
       )}

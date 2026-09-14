@@ -49,9 +49,28 @@ export const metadata: Metadata = {
   },
 };
 
+// Runs before paint to avoid a flash of the wrong theme. Kept tiny and
+// dependency-free since it executes synchronously in the document head.
+const themeInitScript = `
+(function () {
+  try {
+    var stored = localStorage.getItem('theme');
+    var theme = stored === 'light' || stored === 'dark'
+      ? stored
+      : (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+})();
+`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="h-full">
+    <html lang="en" className={`h-full`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className="min-h-full bg-[var(--color-bg)] font-sans text-[var(--color-text)] antialiased">
         {children}
       </body>

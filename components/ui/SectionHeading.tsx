@@ -44,7 +44,7 @@ export function Tag({ children, tone = "default" }: { children: React.ReactNode;
       className={cn(
         "inline-flex items-center rounded-md border px-2.5 py-1 text-xs font-medium",
         tone === "default" &&
-          "border-[var(--color-border)] bg-white/[0.03] text-[var(--color-text-muted)]",
+          "border-[var(--color-border)] bg-[var(--color-card-strong)] text-[var(--color-text-muted)]",
         tone === "accent" &&
           "border-[var(--color-accent)]/30 bg-[var(--color-accent-soft)] text-[var(--color-accent)]"
       )}

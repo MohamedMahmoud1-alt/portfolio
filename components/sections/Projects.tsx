@@ -2,13 +2,33 @@
 
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight, X } from "lucide-react";
+import {
+  ArrowUpRight,
+  X,
+  Eye,
+  MessagesSquare,
+  Sparkles,
+  BarChart3,
+  Network,
+  Server,
+  AudioWaveform,
+  Users2,
+  ExternalLink,
+} from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
+import { GithubMark } from "@/components/ui/BrandIcons";
 import { projects, type Project } from "@/data/projects";
 import { cn } from "@/lib/utils";
 
-const filters = ["All", "Computer Vision", "NLP", "Generative AI", "Classical ML", "Other"] as const;
+const filters = [
+  "All",
+  "Computer Vision",
+  "NLP",
+  "Generative AI",
+  "Classical ML",
+  "Other",
+] as const;
 type Filter = (typeof filters)[number];
 
 function matchesFilter(project: Project, filter: Filter) {
@@ -17,6 +37,17 @@ function matchesFilter(project: Project, filter: Filter) {
     return !/computer vision|nlp|generative ai|classical ml/i.test(project.category);
   }
   return project.category.toLowerCase().includes(filter.toLowerCase());
+}
+
+function categoryIcon(category: string) {
+  const c = category.toLowerCase();
+  if (c.includes("computer vision")) return Eye;
+  if (c.includes("nlp")) return MessagesSquare;
+  if (c.includes("generative")) return Sparkles;
+  if (c.includes("classical ml")) return BarChart3;
+  if (c.includes("expert systems")) return Network;
+  if (c.includes("signal processing")) return AudioWaveform;
+  return Server;
 }
 
 export function Projects() {
@@ -32,7 +63,7 @@ export function Projects() {
           <SectionHeading
             kicker="Selected work"
             title="Project case studies"
-            description="Applied ML, deep learning, NLP, and generative AI projects — built independently and through hackathon and training contexts."
+            description="Twelve applied ML, deep learning, NLP, and generative AI projects — built independently, through hackathons, and with team collaborators."
           />
         </Reveal>
 
@@ -54,43 +85,60 @@ export function Projects() {
         </Reveal>
 
         <RevealGroup className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {visible.map((project) => (
-            <RevealItem key={project.slug}>
-              <button
-                onClick={() => setActive(project)}
-                className="group flex h-full w-full flex-col rounded-2xl border border-[var(--color-border)] bg-white/[0.02] p-6 text-left transition-all hover:-translate-y-1 hover:border-[var(--color-primary)]/40 hover:bg-white/[0.04]"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <span className="font-[family-name:var(--font-display)] text-lg font-semibold leading-snug text-[var(--color-text)]">
-                    {project.title}
-                  </span>
-                  <ArrowUpRight
-                    size={18}
-                    className="mt-1 shrink-0 text-[var(--color-text-faint)] transition-colors group-hover:text-[var(--color-primary)]"
-                  />
-                </div>
-                <p className="mt-1.5 text-xs font-medium text-[var(--color-primary)]">{project.category}</p>
-                <p className="mt-3 flex-1 text-sm leading-relaxed text-[var(--color-text-muted)] text-pretty">
-                  {project.overview}
-                </p>
-                <div className="mt-5 flex flex-wrap gap-1.5">
-                  {project.technologies.slice(0, 3).map((t) => (
-                    <span
-                      key={t}
-                      className="rounded border border-[var(--color-border)] px-2 py-0.5 text-xs text-[var(--color-text-faint)]"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                  {project.technologies.length > 3 && (
-                    <span className="rounded border border-[var(--color-border)] px-2 py-0.5 text-xs text-[var(--color-text-faint)]">
-                      +{project.technologies.length - 3}
-                    </span>
-                  )}
-                </div>
-              </button>
-            </RevealItem>
-          ))}
+          {visible.map((project) => {
+            const Icon = categoryIcon(project.category);
+            return (
+              <RevealItem key={project.slug}>
+                <button
+                  onClick={() => setActive(project)}
+                  className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] text-left transition-all hover:-translate-y-1 hover:border-[var(--color-primary)]/40 hover:bg-[var(--color-card-hover)]"
+                >
+                  <div
+                    className="flex h-24 items-center justify-between px-6"
+                    style={{ background: "var(--gradient-brand-soft)" }}
+                  >
+                    <Icon size={26} className="text-[var(--color-primary)]" />
+                    {project.team && (
+                      <span className="inline-flex items-center gap-1 rounded-full border border-[var(--color-border)] bg-[var(--color-bg)]/60 px-2 py-0.5 text-[10px] font-medium text-[var(--color-text-muted)]">
+                        <Users2 size={11} />
+                        Team
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex flex-1 flex-col p-6">
+                    <div className="flex items-start justify-between gap-3">
+                      <span className="font-[family-name:var(--font-display)] text-lg font-semibold leading-snug text-[var(--color-text)]">
+                        {project.title}
+                      </span>
+                      <ArrowUpRight
+                        size={18}
+                        className="mt-1 shrink-0 text-[var(--color-text-faint)] transition-colors group-hover:text-[var(--color-primary)]"
+                      />
+                    </div>
+                    <p className="mt-1.5 text-xs font-medium text-[var(--color-primary)]">{project.category}</p>
+                    <p className="mt-3 flex-1 text-sm leading-relaxed text-[var(--color-text-muted)] text-pretty">
+                      {project.overview}
+                    </p>
+                    <div className="mt-5 flex flex-wrap gap-1.5">
+                      {project.technologies.slice(0, 3).map((t) => (
+                        <span
+                          key={t}
+                          className="rounded border border-[var(--color-border)] px-2 py-0.5 text-xs text-[var(--color-text-faint)]"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                      {project.technologies.length > 3 && (
+                        <span className="rounded border border-[var(--color-border)] px-2 py-0.5 text-xs text-[var(--color-text-faint)]">
+                          +{project.technologies.length - 3}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </button>
+              </RevealItem>
+            );
+          })}
         </RevealGroup>
       </div>
 
@@ -127,6 +175,12 @@ function ProjectModal({ project, onClose }: { project: Project | null; onClose: 
                 <h3 className="mt-1 font-[family-name:var(--font-display)] text-2xl font-semibold text-[var(--color-text)]">
                   {project.title}
                 </h3>
+                {project.team && (
+                  <span className="mt-2 inline-flex items-center gap-1 rounded-full border border-[var(--color-border)] px-2 py-0.5 text-xs text-[var(--color-text-muted)]">
+                    <Users2 size={12} />
+                    Team project
+                  </span>
+                )}
               </div>
               <button
                 onClick={onClose}
@@ -171,6 +225,34 @@ function ProjectModal({ project, onClose }: { project: Project | null; onClose: 
                   ))}
                 </div>
               </div>
+
+              {(project.githubUrl || project.liveUrl) && (
+                <div className="flex flex-wrap gap-3 border-t border-[var(--color-border)] pt-5">
+                  {project.githubUrl && (
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border-strong)] px-4 py-2 text-sm font-medium text-[var(--color-text)] transition-colors hover:border-[var(--color-primary)]"
+                    >
+                      <GithubMark size={15} />
+                      View code
+                    </a>
+                  )}
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white"
+                      style={{ background: "var(--gradient-brand)" }}
+                    >
+                      <ExternalLink size={15} />
+                      Live demo
+                    </a>
+                  )}
+                </div>
+              )}
             </div>
           </motion.div>
         </motion.div>

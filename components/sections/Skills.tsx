@@ -17,7 +17,7 @@ export function Skills() {
         <RevealGroup className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2">
           {technicalSkills.map((category) => (
             <RevealItem key={category.title}>
-              <div className="h-full rounded-2xl border border-[var(--color-border)] bg-white/[0.02] p-6 transition-colors hover:border-[var(--color-border-strong)]">
+              <div className="h-full rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] p-6 transition-colors hover:border-[var(--color-border-strong)]">
                 <h3 className="text-sm font-semibold text-[var(--color-text)]">{category.title}</h3>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {category.items.map((item) => (

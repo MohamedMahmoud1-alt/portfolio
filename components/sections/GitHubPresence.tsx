@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { ExternalLink, BarChart3 } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
+import { Counter } from "@/components/ui/Counter";
 import { socials } from "@/data/socials";
 import { GithubMark, LinkedinMark, KaggleMark } from "@/components/ui/BrandIcons";
 
@@ -64,7 +65,7 @@ export function GitHubPresence() {
               href={github?.url}
               target="_blank"
               rel="noreferrer"
-              className="group flex h-full flex-col justify-between rounded-2xl border border-[var(--color-border)] bg-white/[0.02] p-6 transition-colors hover:border-[var(--color-primary)]/40"
+              className="group flex h-full flex-col justify-between rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] p-6 transition-colors hover:border-[var(--color-primary)]/40"
             >
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
@@ -125,7 +126,7 @@ function StatBlock({ label, value }: { label: string; value: string | number }) 
   return (
     <div>
       <div className="font-[family-name:var(--font-display)] text-xl font-semibold text-[var(--color-text)]">
-        {value}
+        {typeof value === "number" ? <Counter value={String(value)} duration={1} /> : value}
       </div>
       <div className="mt-0.5 text-xs text-[var(--color-text-faint)]">{label}</div>
     </div>
@@ -148,7 +149,7 @@ function PresenceLink({
       href={url}
       target="_blank"
       rel="noreferrer"
-      className="group flex flex-1 items-center justify-between rounded-2xl border border-[var(--color-border)] bg-white/[0.02] p-5 transition-colors hover:border-[var(--color-primary)]/40"
+      className="group flex flex-1 items-center justify-between rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] p-5 transition-colors hover:border-[var(--color-primary)]/40"
     >
       <div className="flex items-center gap-3">
         <span className="rounded-xl border border-[var(--color-border)] bg-[var(--color-elevated)] p-3 text-[var(--color-text)]">

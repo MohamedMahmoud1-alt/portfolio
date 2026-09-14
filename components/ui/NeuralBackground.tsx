@@ -7,12 +7,36 @@ type Node = {
   y: number;
   vx: number;
   vy: number;
+  hue: number; // 0, 1, or 2 -> indexes into the brand palette
+  pulse: number;
+};
+
+// Brand gradient stops (violet, pink, orange), duplicated here since canvas
+// fillStyle can't read CSS custom properties directly.
+const PALETTE = {
+  dark: {
+    line: [167, 139, 250] as const,
+    nodes: [
+      [167, 139, 250],
+      [244, 114, 182],
+      [251, 146, 60],
+    ] as const,
+  },
+  light: {
+    line: [124, 58, 237] as const,
+    nodes: [
+      [124, 58, 237],
+      [219, 39, 119],
+      [234, 88, 12],
+    ] as const,
+  },
 };
 
 /**
- * Lightweight canvas-based drifting node network, evoking a neural net /
- * circuit graph without being literal. Frozen to a single static frame
- * under prefers-reduced-motion. Pointer-events disabled — purely decorative.
+ * Lightweight canvas-based drifting node network in the brand's gradient
+ * hues, evoking a neural net / circuit graph without being literal. Frozen
+ * to a single static frame under prefers-reduced-motion. Re-colors itself
+ * when the page theme toggles. Pointer-events disabled — purely decorative.
  */
 export function NeuralBackground({ className }: { className?: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -30,6 +54,9 @@ export function NeuralBackground({ className }: { className?: string }) {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let nodes: Node[] = [];
     let animationId: number;
+    let t = 0;
+    let theme: "dark" | "light" =
+      document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
 
     function resize() {
       if (!canvas) return;
@@ -42,18 +69,23 @@ export function NeuralBackground({ className }: { className?: string }) {
       canvas.style.height = `${height}px`;
       ctx?.scale(dpr, dpr);
 
-      const count = Math.min(52, Math.round((width * height) / 22000));
+      const count = Math.min(56, Math.round((width * height) / 21000));
       nodes = Array.from({ length: count }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.18,
-        vy: (Math.random() - 0.5) * 0.18,
+        vx: (Math.random() - 0.5) * 0.2,
+        vy: (Math.random() - 0.5) * 0.2,
+        hue: Math.floor(Math.random() * 3),
+        pulse: Math.random() * Math.PI * 2,
       }));
     }
 
     function step() {
       if (!ctx) return;
       ctx.clearRect(0, 0, width, height);
+      t += 0.016;
+
+      const palette = PALETTE[theme];
 
       for (const n of nodes) {
         n.x += n.vx;
@@ -63,6 +95,7 @@ export function NeuralBackground({ className }: { className?: string }) {
       }
 
       const maxDist = Math.min(160, width / 6);
+      const [lr, lg, lb] = palette.line;
       for (let i = 0; i < nodes.length; i++) {
         for (let j = i + 1; j < nodes.length; j++) {
           const a = nodes[i];
@@ -71,8 +104,8 @@ export function NeuralBackground({ className }: { className?: string }) {
           const dy = a.y - b.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < maxDist) {
-            const opacity = (1 - dist / maxDist) * 0.16;
-            ctx.strokeStyle = `rgba(109, 140, 255, ${opacity})`;
+            const opacity = (1 - dist / maxDist) * 0.15;
+            ctx.strokeStyle = `rgba(${lr}, ${lg}, ${lb}, ${opacity})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
@@ -83,9 +116,11 @@ export function NeuralBackground({ className }: { className?: string }) {
       }
 
       for (const n of nodes) {
+        const [nr, ng, nb] = palette.nodes[n.hue];
+        const glow = reduceMotion ? 0.55 : 0.4 + Math.sin(t * 1.4 + n.pulse) * 0.2;
         ctx.beginPath();
-        ctx.arc(n.x, n.y, 1.6, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(154, 175, 255, 0.55)";
+        ctx.arc(n.x, n.y, 1.7, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${nr}, ${ng}, ${nb}, ${glow})`;
         ctx.fill();
       }
 
@@ -108,10 +143,20 @@ export function NeuralBackground({ className }: { className?: string }) {
     };
     window.addEventListener("resize", onResize);
 
+    const observer = new MutationObserver(() => {
+      const next = document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
+      if (next !== theme) {
+        theme = next;
+        if (reduceMotion) step();
+      }
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
     return () => {
       window.removeEventListener("resize", onResize);
       cancelAnimationFrame(animationId);
       clearTimeout(resizeTimeout);
+      observer.disconnect();
     };
   }, []);
 

@@ -2,18 +2,19 @@
 
 import Image from "next/image";
 import { ArrowRight, Download } from "lucide-react";
-import { GithubMark, LinkedinMark } from "@/components/ui/BrandIcons";
 import { NeuralBackground } from "@/components/ui/NeuralBackground";
 import { Magnetic } from "@/components/ui/MagneticButton";
+import { GithubMark, LinkedinMark, KaggleMark } from "@/components/ui/BrandIcons";
+import { Counter } from "@/components/ui/Counter";
+import { TiltCard } from "@/components/ui/TiltCard";
 import { site } from "@/data/site";
 import { socials } from "@/data/socials";
 import { quickStats } from "@/data/skills";
 import { motion } from "framer-motion";
 
-export function Hero() {
-  const github = socials.find((s) => s.icon === "github");
-  const linkedin = socials.find((s) => s.icon === "linkedin");
+const iconMap = { github: GithubMark, linkedin: LinkedinMark, kaggle: KaggleMark } as const;
 
+export function Hero() {
   return (
     <section id="top" className="relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-28">
       <div className="absolute inset-0">
@@ -28,9 +29,9 @@ export function Hero() {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-white/[0.03] px-3.5 py-1.5 text-sm text-[var(--color-text-muted)]"
+            className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-card-strong)] px-3.5 py-1.5 text-sm text-[var(--color-text-muted)]"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
+            <span className="h-1.5 w-1.5 rounded-full" style={{ background: "var(--gradient-brand)" }} />
             Open to AI / ML Engineering internships
           </motion.div>
 
@@ -61,7 +62,8 @@ export function Hero() {
             <Magnetic
               as="a"
               href="#projects"
-              className="inline-flex items-center gap-2 rounded-full bg-[var(--color-primary)] px-6 py-3 text-sm font-semibold text-[#050609] shadow-[0_0_0_1px_rgba(109,140,255,0.4),0_8px_30px_-8px_rgba(109,140,255,0.6)] transition-transform"
+              className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white shadow-[0_8px_30px_-8px_rgba(167,139,250,0.55)] transition-transform"
+              style={{ background: "var(--gradient-brand)" }}
             >
               View My Projects
               <ArrowRight size={16} />
@@ -76,28 +78,22 @@ export function Hero() {
             </Magnetic>
 
             <div className="ml-1 flex items-center gap-2">
-              {github && (
-                <a
-                  href={github.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="GitHub profile"
-                  className="rounded-full border border-[var(--color-border)] p-2.5 text-[var(--color-text-muted)] transition-colors hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
-                >
-                  <GithubMark size={18} />
-                </a>
-              )}
-              {linkedin && (
-                <a
-                  href={linkedin.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="LinkedIn profile"
-                  className="rounded-full border border-[var(--color-border)] p-2.5 text-[var(--color-text-muted)] transition-colors hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
-                >
-                  <LinkedinMark size={18} />
-                </a>
-              )}
+              {socials.map((s) => {
+                const Icon = iconMap[s.icon as keyof typeof iconMap];
+                if (!Icon) return null;
+                return (
+                  <a
+                    key={s.icon}
+                    href={s.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={s.label}
+                    className="rounded-full border border-[var(--color-border)] p-2.5 text-[var(--color-text-muted)] transition-colors hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
+                  >
+                    <Icon size={18} />
+                  </a>
+                );
+              })}
             </div>
           </motion.div>
 
@@ -110,8 +106,8 @@ export function Hero() {
             {quickStats.map((stat) => (
               <div key={stat.label}>
                 <dt className="sr-only">{stat.label}</dt>
-                <dd className="font-[family-name:var(--font-display)] text-2xl font-semibold text-[var(--color-text)]">
-                  {stat.value}
+                <dd className="font-[family-name:var(--font-display)] text-2xl font-semibold gradient-ink">
+                  <Counter value={stat.value} />
                 </dd>
                 <dd className="mt-1 text-xs leading-snug text-[var(--color-text-faint)]">{stat.label}</dd>
               </div>
@@ -128,26 +124,35 @@ export function Hero() {
         >
           <div
             aria-hidden="true"
-            className="absolute -inset-10 rounded-[2.5rem] bg-[radial-gradient(circle_at_50%_30%,rgba(109,140,255,0.22),transparent_65%)] blur-2xl"
+            className="absolute -inset-10 rounded-[2.5rem] blur-2xl opacity-60"
+            style={{ background: "var(--gradient-brand-soft)" }}
           />
           <div
             aria-hidden="true"
-            className="absolute -right-6 -top-6 h-24 w-24 rounded-2xl border border-[var(--color-accent)]/25 bg-[var(--color-accent-soft)] blur-[1px]"
+            className="absolute -right-6 -top-6 h-24 w-24 rounded-2xl opacity-70 blur-[2px]"
+            style={{ background: "var(--gradient-brand-soft)" }}
           />
           <div
             aria-hidden="true"
-            className="absolute -bottom-8 -left-6 h-28 w-28 rounded-full border border-[var(--color-primary)]/25"
+            className="absolute -bottom-8 -left-6 h-28 w-28 rounded-full border-2 opacity-50"
+            style={{ borderImage: "var(--gradient-brand) 1" }}
           />
-          <div className="relative">
-            <Image
-              src="/images/profile-hero.png"
-              alt="Portrait of Mohamed Mahmoud Salem"
-              width={711}
-              height={906}
-              priority
-              className="relative z-10 mx-auto h-auto w-full max-w-[380px] select-none"
-            />
-          </div>
+
+          {/* Gradient-framed photo card with a subtle mouse-tilt */}
+          <TiltCard className="relative">
+            <div className="rounded-[1.75rem] p-[3px]" style={{ background: "var(--gradient-brand)" }}>
+              <div className="overflow-hidden rounded-[calc(1.75rem-3px)] bg-[var(--color-bg)]">
+                <Image
+                  src="/images/profile-hero.jpg"
+                  alt="Portrait of Mohamed Mahmoud Salem"
+                  width={900}
+                  height={1125}
+                  priority
+                  className="h-auto w-full select-none"
+                />
+              </div>
+            </div>
+          </TiltCard>
         </motion.div>
       </div>
     </section>

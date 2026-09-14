@@ -3,15 +3,19 @@
 import { useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { X, ChevronLeft, ChevronRight, Award } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Award, ChevronDown } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { certificates } from "@/data/certificates";
 
 const sorted = [...certificates].sort((a, b) => (a.sortDate < b.sortDate ? 1 : -1));
+const essential = sorted.filter((c) => c.tier === "essential");
+const more = sorted.filter((c) => c.tier === "more");
 
 export function Certifications() {
   const [index, setIndex] = useState<number | null>(null);
+  const [expanded, setExpanded] = useState(false);
+  const visible = expanded ? sorted : essential;
 
   const open = index !== null;
   const current = index !== null ? sorted[index] : null;
@@ -32,16 +36,16 @@ export function Certifications() {
           <SectionHeading
             kicker="Certifications"
             title="15 completed certifications"
-            description="Institutional training and self-paced coursework from NTI, MCIT, NVIDIA DLI, ITI, DataCamp, Udacity, and Microsoft. Click any certificate to view it full-size."
+            description='The core institutional training programs below; 10 shorter self-paced certificates from DataCamp, Udacity, and Microsoft are grouped under "Show more." Click any certificate to view it full-size.'
           />
         </Reveal>
 
         <RevealGroup className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {sorted.map((cert, i) => (
+          {visible.map((cert) => (
             <RevealItem key={cert.id}>
               <button
-                onClick={() => setIndex(i)}
-                className="group flex h-full w-full flex-col overflow-hidden rounded-xl border border-[var(--color-border)] bg-white/[0.02] text-left transition-all hover:-translate-y-1 hover:border-[var(--color-primary)]/40"
+                onClick={() => setIndex(sorted.findIndex((c) => c.id === cert.id))}
+                className="group flex h-full w-full flex-col overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] text-left transition-all hover:-translate-y-1 hover:border-[var(--color-primary)]/40"
               >
                 <div className="relative aspect-[4/3] w-full overflow-hidden bg-[var(--color-elevated)]">
                   <Image
@@ -66,6 +70,18 @@ export function Certifications() {
             </RevealItem>
           ))}
         </RevealGroup>
+
+        {more.length > 0 && (
+          <div className="mt-6 flex justify-center">
+            <button
+              onClick={() => setExpanded((v) => !v)}
+              className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] px-4 py-2 text-sm text-[var(--color-text-muted)] transition-colors hover:border-[var(--color-primary)] hover:text-[var(--color-text)]"
+            >
+              {expanded ? "Show fewer certifications" : `Show ${more.length} more certifications`}
+              <ChevronDown size={15} className={expanded ? "rotate-180 transition-transform" : "transition-transform"} />
+            </button>
+          </div>
+        )}
       </div>
 
       <AnimatePresence>

@@ -1,19 +1,23 @@
 # Mohamed Mahmoud Salem — AI Engineering Portfolio
 
-A production-ready personal portfolio built with Next.js, TypeScript, Tailwind CSS, and Framer Motion — showcasing applied Machine Learning, Deep Learning, NLP, Computer Vision, and Generative AI work, training, and certifications.
+A production-ready personal portfolio built with Next.js, TypeScript, Tailwind CSS, and Framer Motion — showcasing applied Machine Learning, Deep Learning, NLP, Computer Vision, and Generative AI work, training, certifications, and research.
 
-Sections: Hero · About · Why Me · Skills · Projects · Certifications · Education & Training · Achievements & Leadership · Professional Presence (GitHub/LinkedIn/Kaggle) · Resume · Contact.
+Sections: Hero · About · Why Me · Skills · Projects · Certifications · Research · Education & Training · Achievements & Leadership · Professional Presence (GitHub/LinkedIn/Kaggle) · Resume · Contact.
+
+**v2 highlights:** a vibrant violet → pink → orange gradient identity with a full Dark/Light theme toggle, 12 real projects (verified against their actual GitHub repos), a dedicated Research section, real competition/leadership certificates in Achievements, animated number counters, a scroll-progress bar, and a mouse-tilt hero portrait.
 
 ---
 
 ## 1. Content notes
 
-Two details differed between your CV and portfolio PDF during the initial build. Both have since been **confirmed directly with Mohamed** and the site now reflects the confirmed values:
+A few details were confirmed directly with Mohamed during the build and are reflected below:
 
-1. **LinkedIn URL** — confirmed as `linkedin.com/in/mohamed-mahmoud-mohamed-salem` (matches the CV). Set in `data/socials.ts`.
-2. **Class year** — confirmed as **fourth-year**. Set throughout `data/site.ts` (hero subheadline, About heading, About paragraph).
+1. **LinkedIn URL** — `linkedin.com/in/mohamed-mahmoud-mohamed-salem`. Set in `data/socials.ts`.
+2. **Class year** — fourth-year. Set throughout `data/site.ts`.
+3. **Projects** — all 12 project names, descriptions, and tech stacks were verified directly against their GitHub repositories (not assumed from the original CV/portfolio PDF), including two with live demos (Suez Canal Authority Bank, Smart Home Diagnostics).
+4. **Research** — the solar-forecasting paper is unpublished/under review, so no preprint link or cover image is shown per Mohamed's request.
 
-Everything else (projects, certifications, dates, scores, GPA, leadership roles) was verified directly against your certificate images and is consistent across sources.
+Everything else (certifications, dates, scores, GPA, leadership roles) was verified directly against certificate images.
 
 ---
 
@@ -21,10 +25,10 @@ Everything else (projects, certifications, dates, scores, GPA, leadership roles)
 
 - **Next.js 16** (App Router, static export via `output: "export"`)
 - **TypeScript**
-- **Tailwind CSS v4** (CSS-based theme, see `app/globals.css`)
-- **Framer Motion** for animation
+- **Tailwind CSS v4** (CSS-based theme, see `app/globals.css`) with a runtime Dark/Light toggle driven by a `data-theme` attribute on `<html>`
+- **Framer Motion** for animation (scroll reveals, number counters, scroll-progress bar, mouse-tilt hero card, magnetic buttons)
 - **lucide-react** for icons (GitHub/LinkedIn/Kaggle use hand-built SVGs in `components/ui/BrandIcons.tsx` since lucide-react no longer ships brand logos)
-- Self-hosted fonts via `@fontsource` (Space Grotesk + Inter) — no runtime call to Google Fonts, so the site has no external font dependency at build or run time
+- Self-hosted fonts via `@fontsource` (Space Grotesk + Inter) — no runtime call to Google Fonts
 
 No backend, no database, no API keys. The two "dynamic" pieces are:
 - The GitHub stats card (`components/sections/GitHubPresence.tsx`), which calls GitHub's public REST API directly from the visitor's browser and gracefully falls back to static links if the call fails or is rate-limited.
@@ -37,30 +41,29 @@ No backend, no database, no API keys. The two "dynamic" pieces are:
 ```
 portfolio/
 ├── app/
-│   ├── layout.tsx        # Root layout, fonts, SEO metadata
-│   ├── page.tsx          # Assembles all sections + JSON-LD
-│   ├── globals.css       # Design tokens (Tailwind v4 @theme) + base styles
-│   ├── sitemap.ts        # Generates /sitemap.xml
-│   ├── robots.ts         # Generates /robots.txt
+│   ├── layout.tsx        # Root layout, fonts, theme-init script, SEO metadata
+│   ├── page.tsx           # Assembles all sections + JSON-LD
+│   ├── globals.css        # Design tokens (Tailwind v4 @theme), dark + light theme
+│   ├── sitemap.ts / robots.ts
 │   ├── icon.png / apple-icon.png / favicon.ico
 ├── components/
-│   ├── layout/            # Navbar, Footer
-│   ├── sections/          # One file per page section
-│   └── ui/                # Reusable primitives (Reveal, Magnetic button,
-│                           # NeuralBackground canvas, SectionHeading,
-│                           # BrandIcons)
-├── data/                  # All real content — edit these, not the components
-│   ├── site.ts             # Hero copy, About copy, USP copy, SEO strings
-│   ├── socials.ts          # Email, phone, GitHub/LinkedIn/Kaggle URLs
-│   ├── skills.ts            # Technical + soft skills, quick stats
-│   ├── projects.ts          # 8 project case studies
-│   ├── certificates.ts      # 15 certificates (title, issuer, date, image)
-│   ├── education.ts         # Degree info
-│   └── experience.ts        # Training timeline, leadership, achievements
-├── lib/utils.ts            # `cn()` class-name helper
+│   ├── layout/             # Navbar (incl. theme toggle), Footer
+│   ├── sections/           # One file per page section
+│   └── ui/                 # Reveal, Magnetic, NeuralBackground, ThemeToggle,
+│                            # Counter, ScrollProgress, TiltCard, BrandIcons
+├── data/                   # All real content — edit these, not the components
+│   ├── site.ts              # Hero copy, About copy, USP copy, SEO strings
+│   ├── socials.ts            # Email, phone, GitHub/LinkedIn/Kaggle URLs
+│   ├── skills.ts              # Technical + soft skills, quick stats
+│   ├── projects.ts            # 12 project case studies (verified vs. GitHub)
+│   ├── certificates.ts        # 15 certificates (essential/more tiers)
+│   ├── research.ts            # Research paper details
+│   ├── education.ts           # Degree info
+│   └── experience.ts          # Training timeline, leadership, achievements
+├── lib/utils.ts             # `cn()` class-name helper
 ├── public/
-│   ├── images/               # Profile photo + 15 certificate images
-│   └── cv/                   # Downloadable CV PDF
+│   ├── images/                 # Profile photo + certificate images
+│   └── cv/                     # Downloadable CV PDF
 ├── next.config.ts
 ├── package.json
 └── .env.example
@@ -126,26 +129,26 @@ The form currently opens the visitor's email client via a `mailto:` link — no 
 
 ## 8. Design system
 
-- **Palette:** deep blue-charcoal background (`#0b0e14`) with a signal-blue primary (`#6d8cff`) and a warm amber counterpoint (`#f2b84b`) — chosen deliberately over the more generic "near-black + single neon accent" look, and to avoid a cyberpunk/gamer feel while staying in the dark, technical register you asked for.
+- **Palette:** a vibrant violet → pink → orange gradient (`--gradient-brand` in `app/globals.css`) carries the brand identity — used in the hero headline, primary buttons, card borders, and stat numbers — on top of a deep charcoal dark theme and a soft off-white light theme, both defined as CSS custom properties and swapped at runtime via `data-theme` on `<html>`.
 - **Type:** Space Grotesk for headings (technical, geometric), Inter for body/UI text.
-- **Motion:** one signature hero animation (a lightweight canvas neural-node network), scroll-triggered reveals, a magnetic-pull effect on primary buttons, and modal/lightbox transitions for projects and certificates. Everything respects `prefers-reduced-motion` — animations are disabled and the canvas freezes to a static frame for visitors who have that preference set.
-- All tokens live in `app/globals.css` under `@theme` (Tailwind v4's CSS-based config) — change colors, fonts, or spacing there.
+- **Motion:** a canvas neural-node network in the hero (colored from the brand gradient, theme-aware), scroll-triggered reveals, animated number counters, a scroll-progress bar, a mouse-tilt hero portrait, a magnetic-pull effect on primary buttons, and modal/lightbox transitions for projects, certificates, and achievement proof images. Everything respects `prefers-reduced-motion`.
+- All tokens live in `app/globals.css` under `@theme` and the `[data-theme="light"]` override block — change colors, fonts, or spacing there.
 
 ---
 
 ## 9. Content & QA checklist
 
-- [x] All content sourced from your CV, portfolio PDF, and certificate files — nothing fabricated
-- [x] All 8 real projects included with real technical descriptions
-- [x] All 15 real certificates included as viewable/downloadable images with a lightbox
-- [x] CV is a genuine, downloadable PDF rebuilt from your original two-page CV
-- [x] Profile photo processed and used in the hero section
+- [x] All content sourced from CV, portfolio PDF, certificate images, and verified GitHub repositories — nothing fabricated
+- [x] All 12 real projects included, verified against their actual repos, with GitHub/live-demo links where available
+- [x] All certificates (15 core + 7 achievement/leadership proof certs) included as viewable images with lightboxes
+- [x] CV is a genuine, downloadable PDF
+- [x] Profile photo updated and processed for the hero section
 - [x] `npm run build` succeeds with zero TypeScript or ESLint errors
-- [x] Reduced-motion support verified in code (canvas freezes, global transition override)
-- [x] Alt text on every image (profile photo and all 15 certificates)
-- [x] SEO: metadata, Open Graph, Twitter card, JSON-LD `Person` schema, sitemap.xml, robots.txt
+- [x] Dark/Light theme toggle implemented and verified in the compiled CSS
+- [x] Reduced-motion support verified in code (canvas freezes, counters skip to final value, tilt disabled)
+- [x] Alt text on every image
+- [x] SEO: metadata, Open Graph, Twitter card, JSON-LD `Person` schema, sitemap.xml, robots.txt — description updated for 12 projects
 - [x] No secrets, API keys, or credentials anywhere in the codebase
-- [x] LinkedIn URL and class-year wording confirmed directly and corrected
 - [ ] Add a real production domain and set `NEXT_PUBLIC_SITE_URL` once you have one
 - [ ] Consider swapping the `mailto:` contact form for a hosted form backend if you want messages delivered without opening the visitor's mail client (see §7)
 

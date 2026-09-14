@@ -13,10 +13,10 @@ export const site = {
 
   heroHeadline: "I build AI that has to actually work.",
   heroSubheadline:
-    "Fourth-year AI Engineering student turning coursework into working systems — fine-tuned NLP models, computer vision classifiers, and LLM-powered apps, trained through 500+ hours of applied programs at NTI, NVIDIA DLI, ITI, and MCIT.",
+    "Fourth-year AI Engineering student and 2nd-place finisher in the IEEE Suez Canal University AI Competition — turning coursework into working systems across ML, computer vision, NLP, and generative AI, trained through 500+ hours of applied programs at NTI, NVIDIA DLI, ITI, and MCIT.",
 
   seoDescription:
-    "Portfolio of Mohamed Mahmoud Salem, an AI Engineering student specializing in Machine Learning, Deep Learning, NLP, Computer Vision, and Generative AI. 8 applied projects, 15 certifications, and hands-on training from NTI, NVIDIA DLI, MCIT, and ITI.",
+    "Portfolio of Mohamed Mahmoud Salem, an AI Engineering student specializing in Machine Learning, Deep Learning, NLP, Computer Vision, and Generative AI. 12 applied projects, a 2nd-place IEEE AI Competition finish, and hands-on training from NTI, NVIDIA DLI, MCIT, and ITI.",
 
   seoKeywords: [
     "AI Engineer",
@@ -34,10 +34,10 @@ export const site = {
     eyebrow: "About",
     heading: "Fourth-year AI Engineering student, trained to build — not just study.",
     paragraphs: [
-      "I'm a fourth-year Artificial Intelligence Engineering student at New Ismailia National University, building toward one goal: shipping AI that holds up outside of a notebook. That means writing the preprocessing pipeline, training the model, reading the confusion matrix, and — more often than not — finding the bug that was quietly wrecking my validation scores before I trust a single number.",
-      "My hands-on work spans classification and NLP (a bilingual Arabic/English fake-news detector fine-tuned on Hugging Face transformers), computer vision (a 7-class facial emotion classifier trained on 50,000+ images, plus a structural crack detector), and generative AI (a LangChain-based conversational agent and applied training in RAG and prompt engineering through NVIDIA's Deep Learning Institute).",
-      "That project work sits on top of structured, evaluated training — over 500 hours across five applied programs at the National Telecommunication Institute, the Ministry of Communications and IT, and NVIDIA DLI/ITI, plus 15 completed certifications from DataCamp, Udacity, and Microsoft. I currently lead the technical team at my university's Microsoft Student Club and hold Golden AI Member recognition from IEEE Suez Canal University for contributions to NLP and computer vision projects.",
-      "I'm currently looking for an AI/ML Engineering internship where I can bring that same rigor — building, testing, and debugging models until the metrics can actually be trusted — to a production environment.",
+      "Mohamed Mahmoud Salem is a fourth-year AI Engineering student who has spent the past two years turning coursework into competitive, working systems. In May 2026, he placed 2nd in the IEEE Suez Canal University AI Competition — proof that his models hold up under real evaluation, not just in a notebook.",
+      "His project range covers the full AI stack: a bilingual Arabic/English fake-news classifier, a 7-class facial emotion recognizer trained on 50,000+ images, a Gemini-powered multimodal assistant, a YOLO11-based workplace safety detector, and a rule-based expert system combining fuzzy logic with MYCIN and Bayesian confidence models — each one debugged, evaluated, and pushed past \"it runs\" to \"it's reliable.\" That same rigor carries into research: he's a co-author on a peer-reviewed paper (currently under review) applying a hybrid ELM + Harris Hawks Optimization model to solar power forecasting, achieving an R² of 0.993.",
+      "The technical foundation behind all of this is structured and evaluated — over 500 hours of applied training across NTI, MCIT, NVIDIA's Deep Learning Institute, and ITI, plus 15 completed certifications. He's currently training in Agentic AI at DEPI (Round 5, through January 2027), extending his GenAI work into LLM orchestration and RAG.",
+      "Outside of his own projects, he leads as Technical Head of the Microsoft Student Club at Suez Canal University, organizing AI/ML workshops and mentoring other students — the kind of role that comes from being trusted with other people's learning, not just his own. He's currently looking for an AI/ML Engineering internship where that combination of competitive results, research discipline, and technical leadership can go to work on real problems.",
     ],
   },
 
@@ -46,29 +46,29 @@ export const site = {
     heading: "What I bring to an AI team",
     points: [
       {
-        title: "I build across the whole AI stack, not one corner of it",
+        title: "Competition-tested, not just coursework-tested",
         description:
-          "Eight applied projects spanning classical ML (churn prediction), deep learning and computer vision (facial emotion recognition, crack detection), NLP (multilingual fake-news detection), and generative AI (a LangChain conversational agent) — the same range covered by my formal training.",
+          "Placed 2nd in the IEEE Suez Canal University AI Competition (May 2026) — my models have been benchmarked against other engineers under real constraints, not just graded on a syllabus.",
       },
       {
-        title: "I don't trust a metric until I've stress-tested it",
+        title: "Full-spectrum AI builder",
         description:
-          "On the Facial Emotion Recognition project, I traced a training-configuration bug that was silently masking the model's true validation performance, and fixed it before reporting results. On the fake-news classifier, I ran misclassification analysis to find and fix failure patterns instead of stopping at accuracy.",
+          "Twelve applied projects spanning classical ML, deep learning, computer vision, multilingual NLP, expert systems, and generative AI — the same breadth reflected in my formal training.",
       },
       {
-        title: "I'm comfortable with multilingual, code-switched NLP",
+        title: "Research-grade rigor",
         description:
-          "Built an NLP pipeline for the DeepX Hackathon handling Franco-Arabic (code-switched) customer feedback — intent classification and entity extraction on text that doesn't fit neatly into one language.",
+          "Co-author on a peer-reviewed paper (under review) combining ELM and Harris Hawks Optimization for solar power forecasting, reaching an R² of 0.993 against CatBoost, XGBoost, and Transformer baselines.",
       },
       {
-        title: "My training is structured and evaluated, not casual",
+        title: "Structured, evaluated training — not casual learning",
         description:
-          "500+ hours across five applied programs — NTI (Machine Learning, Computer Vision), MCIT (Data Analysis), and NVIDIA DLI/ITI (Generative AI, LLMs, RAG) — each assessed with a final score, plus 15 completed certifications from DataCamp, Udacity, and Microsoft.",
+          "500+ hours across five applied programs (NTI, MCIT, NVIDIA DLI, ITI), each closed out with a scored evaluation, plus 15 completed certifications and ongoing Agentic AI training at DEPI.",
       },
       {
-        title: "I already lead technical work, not just attend it",
+        title: "Leads technical teams, not just projects",
         description:
-          "As Technical Head of my university's Microsoft Student Club, I organize AI/ML workshops and mentor other students. IEEE Suez Canal University recognized me as a Golden AI Member for contributions to NLP and computer vision projects while exploring agentic AI workflows.",
+          "Technical Head of the Microsoft Student Club at Suez Canal University, running AI/ML workshops and mentoring other students — leadership earned through consistent delivery, not a title alone.",
       },
     ],
   },

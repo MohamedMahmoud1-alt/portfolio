@@ -29,7 +29,8 @@ export function Resume() {
               as="a"
               href={CV_PATH}
               download
-              className="inline-flex items-center gap-2 rounded-full bg-[var(--color-primary)] px-6 py-3 text-sm font-semibold text-[#050609]"
+              className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white"
+              style={{ background: "var(--gradient-brand)" }}
             >
               <Download size={16} />
               Download CV (PDF)
@@ -45,7 +46,7 @@ export function Resume() {
         </Reveal>
 
         <Reveal delay={0.1} className="relative mx-auto w-full max-w-sm">
-          <div className="absolute -inset-6 -z-10 rounded-3xl bg-[radial-gradient(circle_at_50%_20%,rgba(109,140,255,0.15),transparent_70%)] blur-xl" />
+          <div className="absolute -inset-6 -z-10 rounded-3xl blur-xl opacity-70" style={{ background: "var(--gradient-brand-soft)" }} />
           <button
             onClick={() => setOpen(true)}
             className="group relative block overflow-hidden rounded-2xl border border-[var(--color-border)] shadow-2xl transition-transform hover:-translate-y-1"

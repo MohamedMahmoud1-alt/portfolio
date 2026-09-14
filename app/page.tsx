@@ -1,11 +1,13 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { Hero } from "@/components/sections/Hero";
 import { About } from "@/components/sections/About";
 import { USP } from "@/components/sections/USP";
 import { Skills } from "@/components/sections/Skills";
 import { Projects } from "@/components/sections/Projects";
 import { Certifications } from "@/components/sections/Certifications";
+import { Research } from "@/components/sections/Research";
 import { Experience } from "@/components/sections/Experience";
 import { Achievements } from "@/components/sections/Achievements";
 import { GitHubPresence } from "@/components/sections/GitHubPresence";
@@ -43,6 +45,7 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Navbar />
+      <ScrollProgress />
       <main>
         <Hero />
         <About />
@@ -50,6 +53,7 @@ export default function Home() {
         <Skills />
         <Projects />
         <Certifications />
+        <Research />
         <Experience />
         <Achievements />
         <GitHubPresence />

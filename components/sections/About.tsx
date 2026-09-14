@@ -12,7 +12,7 @@ export function About() {
         <Reveal>
           <SectionHeading kicker={site.about.eyebrow} title={site.about.heading} />
 
-          <div className="mt-10 space-y-4 rounded-2xl border border-[var(--color-border)] bg-white/[0.02] p-6">
+          <div className="mt-10 space-y-4 rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] p-6">
             <InfoRow icon={<MapPin size={16} />} label="Location" value={site.location} />
             <InfoRow
               icon={<GraduationCap size={16} />}
