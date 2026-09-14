@@ -1,20 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  ArrowUpRight,
-  X,
-  Eye,
-  MessagesSquare,
-  Sparkles,
-  BarChart3,
-  Network,
-  Server,
-  AudioWaveform,
-  Users2,
-  ExternalLink,
-} from "lucide-react";
+import { ArrowUpRight, X, Users2, ExternalLink } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { GithubMark } from "@/components/ui/BrandIcons";
@@ -39,15 +28,15 @@ function matchesFilter(project: Project, filter: Filter) {
   return project.category.toLowerCase().includes(filter.toLowerCase());
 }
 
-function categoryIcon(category: string) {
+function categoryCover(category: string) {
   const c = category.toLowerCase();
-  if (c.includes("computer vision")) return Eye;
-  if (c.includes("nlp")) return MessagesSquare;
-  if (c.includes("generative")) return Sparkles;
-  if (c.includes("classical ml")) return BarChart3;
-  if (c.includes("expert systems")) return Network;
-  if (c.includes("signal processing")) return AudioWaveform;
-  return Server;
+  if (c.includes("computer vision")) return "/images/covers/computer-vision.svg";
+  if (c.includes("nlp")) return "/images/covers/nlp.svg";
+  if (c.includes("generative")) return "/images/covers/generative-ai.svg";
+  if (c.includes("classical ml")) return "/images/covers/classical-ml.svg";
+  if (c.includes("expert systems")) return "/images/covers/expert-systems.svg";
+  if (c.includes("signal processing")) return "/images/covers/signal-processing.svg";
+  return "/images/covers/software-engineering.svg";
 }
 
 export function Projects() {
@@ -86,20 +75,24 @@ export function Projects() {
 
         <RevealGroup className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {visible.map((project) => {
-            const Icon = categoryIcon(project.category);
+            const cover = categoryCover(project.category);
             return (
               <RevealItem key={project.slug}>
                 <button
                   onClick={() => setActive(project)}
                   className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] text-left transition-all hover:-translate-y-1 hover:border-[var(--color-primary)]/40 hover:bg-[var(--color-card-hover)]"
                 >
-                  <div
-                    className="flex h-24 items-center justify-between px-6"
-                    style={{ background: "var(--gradient-brand-soft)" }}
-                  >
-                    <Icon size={26} className="text-[var(--color-primary)]" />
+                  <div className="relative h-36 w-full overflow-hidden">
+                    <Image
+                      src={cover}
+                      alt=""
+                      aria-hidden="true"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
                     {project.team && (
-                      <span className="inline-flex items-center gap-1 rounded-full border border-[var(--color-border)] bg-[var(--color-bg)]/60 px-2 py-0.5 text-[10px] font-medium text-[var(--color-text-muted)]">
+                      <span className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full border border-white/15 bg-black/40 px-2 py-0.5 text-[10px] font-medium text-white/90 backdrop-blur-sm">
                         <Users2 size={11} />
                         Team
                       </span>
@@ -167,31 +160,33 @@ function ProjectModal({ project, onClose }: { project: Project | null; onClose: 
             exit={{ opacity: 0, y: 24, scale: 0.98 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
             onClick={(e) => e.stopPropagation()}
-            className="glass-panel max-h-[85vh] w-full max-w-xl overflow-y-auto rounded-t-3xl border-t p-7 sm:rounded-3xl sm:border"
+            className="glass-panel max-h-[85vh] w-full max-w-xl overflow-y-auto rounded-t-3xl border-t sm:rounded-3xl sm:border"
           >
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="text-xs font-medium text-[var(--color-primary)]">{project.category}</p>
-                <h3 className="mt-1 font-[family-name:var(--font-display)] text-2xl font-semibold text-[var(--color-text)]">
-                  {project.title}
-                </h3>
-                {project.team && (
-                  <span className="mt-2 inline-flex items-center gap-1 rounded-full border border-[var(--color-border)] px-2 py-0.5 text-xs text-[var(--color-text-muted)]">
-                    <Users2 size={12} />
-                    Team project
-                  </span>
-                )}
-              </div>
+            <div className="relative h-40 w-full shrink-0">
+              <Image src={categoryCover(project.category)} alt="" aria-hidden="true" fill className="object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-elevated)] to-transparent" />
               <button
                 onClick={onClose}
                 aria-label="Close project details"
-                className="shrink-0 rounded-full border border-[var(--color-border)] p-2 text-[var(--color-text-muted)] transition-colors hover:border-[var(--color-primary)] hover:text-[var(--color-text)]"
+                className="absolute right-4 top-4 rounded-full border border-white/15 bg-black/40 p-2 text-white backdrop-blur-sm transition-colors hover:bg-black/60"
               >
                 <X size={18} />
               </button>
             </div>
 
-            <div className="mt-6 space-y-5">
+            <div className="p-7 pt-5">
+              <p className="text-xs font-medium text-[var(--color-primary)]">{project.category}</p>
+              <h3 className="mt-1 font-[family-name:var(--font-display)] text-2xl font-semibold text-[var(--color-text)]">
+                {project.title}
+              </h3>
+              {project.team && (
+                <span className="mt-2 inline-flex items-center gap-1 rounded-full border border-[var(--color-border)] px-2 py-0.5 text-xs text-[var(--color-text-muted)]">
+                  <Users2 size={12} />
+                  Team project
+                </span>
+              )}
+
+              <div className="mt-6 space-y-5">
               <div>
                 <h4 className="text-xs font-semibold text-[var(--color-text-faint)]">Overview</h4>
                 <p className="mt-1.5 text-[15px] leading-relaxed text-[var(--color-text-muted)] text-pretty">
@@ -253,6 +248,7 @@ function ProjectModal({ project, onClose }: { project: Project | null; onClose: 
                   )}
                 </div>
               )}
+              </div>
             </div>
           </motion.div>
         </motion.div>
