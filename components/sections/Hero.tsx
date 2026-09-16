@@ -138,21 +138,26 @@ export function Hero() {
             style={{ borderImage: "var(--gradient-brand) 1" }}
           />
 
-          {/* Gradient-framed photo card with a subtle mouse-tilt */}
-          <TiltCard className="relative hero-float">
-            <div className="rounded-[1.75rem] p-[3px]" style={{ background: "var(--gradient-brand)" }}>
-              <div className="overflow-hidden rounded-[calc(1.75rem-3px)] bg-[var(--color-bg)]">
-                <Image
-                  src="/images/profile-hero.jpg"
-                  alt="Portrait of Mohamed Mahmoud Salem"
-                  width={900}
-                  height={1125}
-                  priority
-                  className="h-auto w-full select-none"
-                />
+          {/* Gradient-framed photo card: outer div floats via CSS, inner
+              TiltCard handles the mouse-driven 3D tilt via Framer Motion —
+              kept on separate elements since both animate `transform` and
+              would otherwise fight over the same property. */}
+          <div className="hero-float">
+            <TiltCard className="relative">
+              <div className="rounded-[1.75rem] p-[3px]" style={{ background: "var(--gradient-brand)" }}>
+                <div className="overflow-hidden rounded-[calc(1.75rem-3px)] bg-[var(--color-bg)]">
+                  <Image
+                    src="/images/profile-hero.jpg"
+                    alt="Portrait of Mohamed Mahmoud Salem"
+                    width={900}
+                    height={1125}
+                    priority
+                    className="h-auto w-full select-none"
+                  />
+                </div>
               </div>
-            </div>
-          </TiltCard>
+            </TiltCard>
+          </div>
         </motion.div>
       </div>
     </section>

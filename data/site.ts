@@ -13,7 +13,7 @@ export const site = {
 
   heroHeadline: "I build AI that has to actually work.",
   heroSubheadline:
-    "Fourth-year AI Engineering student and 2nd-place finisher in the IEEE Suez Canal University AI Competition — turning coursework into working systems across ML, computer vision, NLP, and generative AI, trained through 500+ hours of applied programs at NTI, NVIDIA DLI, ITI, and MCIT.",
+    "Fourth-year AI Engineering student and Technical Head of the Microsoft Student Club — turning coursework into working systems across ML, computer vision, NLP, and generative AI, trained through 500+ hours of applied programs at NTI, NVIDIA DLI, ITI, and MCIT.",
 
   seoDescription:
     "Portfolio of Mohamed Mahmoud Salem, an AI Engineering student specializing in Machine Learning, Deep Learning, NLP, Computer Vision, and Generative AI. 12 applied projects, a 2nd-place IEEE AI Competition finish, and hands-on training from NTI, NVIDIA DLI, MCIT, and ITI.",
