@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight, X, Users2, ExternalLink } from "lucide-react";
+import { ArrowUpRight, X, Users2, ExternalLink, Play } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { GithubMark } from "@/components/ui/BrandIcons";
@@ -28,16 +28,6 @@ function matchesFilter(project: Project, filter: Filter) {
   return project.category.toLowerCase().includes(filter.toLowerCase());
 }
 
-function categoryCover(category: string) {
-  const c = category.toLowerCase();
-  if (c.includes("computer vision")) return "/images/covers/computer-vision.svg";
-  if (c.includes("nlp")) return "/images/covers/nlp.svg";
-  if (c.includes("generative")) return "/images/covers/generative-ai.svg";
-  if (c.includes("classical ml")) return "/images/covers/classical-ml.svg";
-  if (c.includes("expert systems")) return "/images/covers/expert-systems.svg";
-  if (c.includes("signal processing")) return "/images/covers/signal-processing.svg";
-  return "/images/covers/software-engineering.svg";
-}
 
 export function Projects() {
   const [filter, setFilter] = useState<Filter>("All");
@@ -75,28 +65,34 @@ export function Projects() {
 
         <RevealGroup className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {visible.map((project) => {
-            const cover = categoryCover(project.category);
             return (
               <RevealItem key={project.slug}>
                 <button
                   onClick={() => setActive(project)}
                   className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] text-left transition-all hover:-translate-y-1 hover:border-[var(--color-primary)]/40 hover:bg-[var(--color-card-hover)]"
                 >
-                  <div className="relative h-36 w-full overflow-hidden">
+                  <div className="relative aspect-[16/9] w-full overflow-hidden bg-[var(--color-elevated)]">
                     <Image
-                      src={cover}
-                      alt=""
-                      aria-hidden="true"
+                      src={project.image}
+                      alt={`${project.title} screenshot`}
                       fill
                       sizes="(max-width: 768px) 100vw, 33vw"
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
-                    {project.team && (
-                      <span className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full border border-white/15 bg-black/40 px-2 py-0.5 text-[10px] font-medium text-white/90 backdrop-blur-sm">
-                        <Users2 size={11} />
-                        Team
-                      </span>
-                    )}
+                    <div className="absolute right-3 top-3 flex gap-1.5">
+                      {project.video && (
+                        <span className="inline-flex items-center gap-1 rounded-full border border-white/15 bg-black/50 px-2 py-0.5 text-[10px] font-medium text-white/90 backdrop-blur-sm">
+                          <Play size={10} />
+                          Demo
+                        </span>
+                      )}
+                      {project.team && (
+                        <span className="inline-flex items-center gap-1 rounded-full border border-white/15 bg-black/50 px-2 py-0.5 text-[10px] font-medium text-white/90 backdrop-blur-sm">
+                          <Users2 size={11} />
+                          Team
+                        </span>
+                      )}
+                    </div>
                   </div>
                   <div className="flex flex-1 flex-col p-6">
                     <div className="flex items-start justify-between gap-3">
@@ -162,9 +158,20 @@ function ProjectModal({ project, onClose }: { project: Project | null; onClose: 
             onClick={(e) => e.stopPropagation()}
             className="glass-panel max-h-[85vh] w-full max-w-xl overflow-y-auto rounded-t-3xl border-t sm:rounded-3xl sm:border"
           >
-            <div className="relative h-40 w-full shrink-0">
-              <Image src={categoryCover(project.category)} alt="" aria-hidden="true" fill className="object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-elevated)] to-transparent" />
+            <div className="relative aspect-[16/9] w-full shrink-0 bg-black">
+              {project.video ? (
+                <video
+                  src={project.video}
+                  poster={project.image}
+                  controls
+                  muted
+                  loop
+                  playsInline
+                  className="h-full w-full object-contain"
+                />
+              ) : (
+                <Image src={project.image} alt={`${project.title} screenshot`} fill className="object-cover" />
+              )}
               <button
                 onClick={onClose}
                 aria-label="Close project details"

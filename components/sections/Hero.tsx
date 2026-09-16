@@ -139,7 +139,7 @@ export function Hero() {
           />
 
           {/* Gradient-framed photo card with a subtle mouse-tilt */}
-          <TiltCard className="relative">
+          <TiltCard className="relative hero-float">
             <div className="rounded-[1.75rem] p-[3px]" style={{ background: "var(--gradient-brand)" }}>
               <div className="overflow-hidden rounded-[calc(1.75rem-3px)] bg-[var(--color-bg)]">
                 <Image

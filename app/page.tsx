@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
+import { AmbientBackground } from "@/components/ui/AmbientBackground";
 import { Hero } from "@/components/sections/Hero";
 import { About } from "@/components/sections/About";
 import { USP } from "@/components/sections/USP";
@@ -44,6 +45,7 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <AmbientBackground />
       <Navbar />
       <ScrollProgress />
       <main>

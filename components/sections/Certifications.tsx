@@ -99,7 +99,7 @@ export function Certifications() {
               exit={{ opacity: 0, scale: 0.96 }}
               transition={{ duration: 0.2 }}
               onClick={(e) => e.stopPropagation()}
-              className="glass-panel relative w-full max-w-3xl overflow-hidden rounded-2xl border"
+              className="glass-panel relative max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-2xl border"
             >
               <button
                 onClick={() => setIndex(null)}

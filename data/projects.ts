@@ -10,11 +10,15 @@ export type Project = {
   githubUrl?: string;
   liveUrl?: string;
   team?: boolean;
+  image: string;
+  video?: string;
 };
 
 export const projects: Project[] = [
   {
     slug: "guardian-eye",
+    image: "/images/projects/guardian-eye.jpg",
+    video: "/videos/guardian-eye.mp4",
     title: "GuardianEye — PPE Violation Detection",
     category: "Computer Vision · YOLO",
     featured: true,
@@ -30,6 +34,7 @@ export const projects: Project[] = [
   },
   {
     slug: "facial-emotion-recognition",
+    image: "/images/projects/facial-emotion-recognition.jpg",
     title: "Facial Emotion Recognition (FER)",
     category: "Computer Vision · Transfer Learning",
     featured: true,
@@ -40,9 +45,12 @@ export const projects: Project[] = [
     result:
       "Identified and resolved a hidden training-configuration bug — turning a misleading validation signal into a trustworthy measure of real model performance.",
     technologies: ["TensorFlow", "Keras", "CNNs", "Transfer Learning"],
+    githubUrl: "https://github.com/TensorSquad/fer-emotion-recognition",
+    team: true,
   },
   {
     slug: "brain-tumor-segmentation",
+    image: "/images/projects/brain-tumor-segmentation.jpg",
     title: "Brain Tumor Segmentation (U-Net)",
     category: "Computer Vision · Medical Imaging",
     featured: true,
@@ -56,6 +64,7 @@ export const projects: Project[] = [
   },
   {
     slug: "multilingual-fake-news-detection",
+    image: "/images/projects/multilingual-fake-news-detection.jpg",
     title: "Multilingual Fake News Detection",
     category: "NLP · Streamlit",
     featured: true,
@@ -71,6 +80,7 @@ export const projects: Project[] = [
   },
   {
     slug: "bemo-conversational-assistant",
+    image: "/images/projects/bemo-conversational-assistant.jpg",
     title: "Bemo — Multimodal Conversational AI Assistant",
     category: "Generative AI · Multimodal",
     featured: true,
@@ -86,6 +96,7 @@ export const projects: Project[] = [
   },
   {
     slug: "smart-home-diagnostics",
+    image: "/images/projects/smart-home-diagnostics.jpg",
     title: "Smart Home Diagnostics — Expert System",
     category: "Expert Systems · Fuzzy Logic",
     featured: true,
@@ -101,6 +112,7 @@ export const projects: Project[] = [
   },
   {
     slug: "structural-crack-detection",
+    image: "/images/projects/structural-crack-detection.jpg",
     title: "Building Crack Classification",
     category: "Computer Vision · Model Comparison",
     featured: false,
@@ -116,6 +128,8 @@ export const projects: Project[] = [
   },
   {
     slug: "dsp-audio-equalizer",
+    image: "/images/projects/dsp-audio-equalizer.jpg",
+    video: "/videos/dsp-equalizer.mp4",
     title: "10-Band DSP Audio Equalizer",
     category: "Signal Processing · Streamlit",
     featured: false,
@@ -131,6 +145,7 @@ export const projects: Project[] = [
   },
   {
     slug: "customer-label-evaluation-deepx",
+    image: "/images/projects/customer-label-evaluation-deepx.jpg",
     title: "Customer Label Evaluation — DeepX Hackathon",
     category: "NLP · Multilingual",
     featured: false,
@@ -143,6 +158,7 @@ export const projects: Project[] = [
   },
   {
     slug: "salary-prediction",
+    image: "/images/projects/salary-prediction.jpg",
     title: "Salary Prediction",
     category: "Classical ML · Regression",
     featured: false,
@@ -155,6 +171,7 @@ export const projects: Project[] = [
   },
   {
     slug: "customer-churn-prediction",
+    image: "/images/projects/customer-churn-prediction.jpg",
     title: "Customer Churn Prediction",
     category: "Classical ML",
     featured: false,
@@ -167,6 +184,7 @@ export const projects: Project[] = [
   },
   {
     slug: "suez-canal-authority-bank",
+    image: "/images/projects/suez-canal-authority-bank.jpg",
     title: "Suez Canal Authority Bank",
     category: "Software Engineering · Full-Stack",
     featured: false,

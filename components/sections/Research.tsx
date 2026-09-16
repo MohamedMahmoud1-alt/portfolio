@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { FlaskConical, Users2 } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
@@ -18,7 +19,17 @@ export function Research() {
 
         <Reveal delay={0.08} className="mt-10">
           <div className="rounded-2xl p-[2px]" style={{ background: "var(--gradient-brand)" }}>
-            <div className="rounded-[calc(1rem-2px)] bg-[var(--color-elevated)] p-6 sm:p-8">
+            <div className="overflow-hidden rounded-[calc(1rem-2px)] bg-[var(--color-elevated)]">
+              <div className="relative aspect-[21/9] w-full">
+                <Image
+                  src="/images/research/solar-forecasting-cover.jpg"
+                  alt="Illustration of a hybrid ELM and Harris Hawks Optimization model forecasting solar energy output"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 900px"
+                  className="object-cover"
+                />
+              </div>
+              <div className="p-6 sm:p-8">
               <div className="flex flex-wrap items-center gap-3">
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-card)] px-3 py-1 text-xs font-medium text-[var(--color-text-muted)]">
                   <FlaskConical size={13} className="text-[var(--color-primary)]" />
@@ -53,6 +64,7 @@ export function Research() {
               <p className="mt-6 text-xs text-[var(--color-text-faint)]">
                 Benchmarked against {research.benchmarkedAgainst.join(", ")}. {research.note}
               </p>
+              </div>
             </div>
           </div>
         </Reveal>

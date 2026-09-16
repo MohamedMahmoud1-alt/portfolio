@@ -171,3 +171,126 @@ body {
     var(--gradient-brand) border-box;
   border: 1px solid transparent;
 }
+
+/* ---------------------------------------------------------------
+   Ambient animated background (site-wide)
+   --------------------------------------------------------------- */
+
+.ambient-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  --mx: 50%;
+  --my: 35%;
+  --hue-shift: 0deg;
+}
+
+.ambient-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, var(--color-border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-border) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+  opacity: 0.5;
+}
+
+.ambient-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.30;
+  will-change: transform;
+}
+
+html[data-theme="light"] .ambient-blob {
+  opacity: 0.22;
+}
+
+.ambient-blob--1 {
+  width: 46vw;
+  height: 46vw;
+  left: -10vw;
+  top: -8vw;
+  background: radial-gradient(circle, #a78bfa 0%, transparent 70%);
+  animation: ambient-drift-1 26s ease-in-out infinite alternate;
+}
+
+.ambient-blob--2 {
+  width: 40vw;
+  height: 40vw;
+  right: -8vw;
+  top: 22vh;
+  background: radial-gradient(circle, #f472b6 0%, transparent 70%);
+  animation: ambient-drift-2 32s ease-in-out infinite alternate;
+}
+
+.ambient-blob--3 {
+  width: 38vw;
+  height: 38vw;
+  left: 28vw;
+  bottom: -14vw;
+  background: radial-gradient(circle, #fb923c 0%, transparent 70%);
+  animation: ambient-drift-3 29s ease-in-out infinite alternate;
+}
+
+/* Cursor-following glow — hue rotates slightly with horizontal position. */
+.ambient-cursor-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    38vw circle at var(--mx) var(--my),
+    hsl(from #a78bfa calc(h + var(--hue-shift)) s l / 0.16) 0%,
+    transparent 65%
+  );
+  transition: background 120ms linear;
+}
+
+/* Browsers without relative-color syntax still get a plain brand-hue glow. */
+@supports not (color: hsl(from #fff h s l)) {
+  .ambient-cursor-glow {
+    background: radial-gradient(
+      38vw circle at var(--mx) var(--my),
+      rgba(167, 139, 250, 0.16) 0%,
+      transparent 65%
+    );
+  }
+}
+
+@keyframes ambient-drift-1 {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(6vw, 8vh, 0) scale(1.12); }
+}
+@keyframes ambient-drift-2 {
+  0%   { transform: translate3d(0, 0, 0) scale(1.05); }
+  100% { transform: translate3d(-7vw, -6vh, 0) scale(0.95); }
+}
+@keyframes ambient-drift-3 {
+  0%   { transform: translate3d(0, 0, 0) scale(0.95); }
+  100% { transform: translate3d(4vw, -9vh, 0) scale(1.1); }
+}
+
+/* Floating hero portrait */
+@keyframes hero-float {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-14px); }
+  100% { transform: translateY(0); }
+}
+
+.hero-float {
+  animation: hero-float 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-blob,
+  .hero-float {
+    animation: none !important;
+  }
+  .ambient-cursor-glow {
+    display: none;
+  }
+}
